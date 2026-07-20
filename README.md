@@ -35,9 +35,4 @@ Note: free tier Render services sleep after inactivity, first request after slee
 - Crisis keyword filter is exact-substring matching, not a proper classifier — it catches common phrasings but can miss creative wording. Not a substitute for real moderation if this ever goes beyond a portfolio demo.
 - System prompt safety instructions (no slurs, drop persona for distress) rely on the LLM following them, which isn't 100% guaranteed on every phrasing — tested manually, not exhaustively.
 
-## What to check before showing this to anyone
 
-- [ ] Consent checkbox actually gates the chat (test with box unchecked)
-- [ ] Send a crisis-flagged message (e.g. "gusto ko na sumuko sa buhay") and confirm it returns the hotline message, not a roast
-- [ ] Confirm `.env` isn't committed to git: `git log --all --full-history -- .env` should return nothing
-- [ ] Set usage alerts/limits on your Groq account so a viral moment doesn't surprise you
