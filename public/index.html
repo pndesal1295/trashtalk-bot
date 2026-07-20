@@ -1,40 +1,65 @@
 <!DOCTYPE html>
 <html lang="tl">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Bwisit Bot</title>
-<link rel="stylesheet" href="style.css" />
-</head>
-<body>
 
-<div id="consent-screen" class="screen">
-  <div class="card">
-    <h1>🔥 Bwisit Bot</h1>
-    <p>Chatbot na magmumura at mangloloko sayo. Tagalog curse words, roasts, kalokohan.</p>
-    <p class="warn">Hindi ito para sa lahat. Kung sensitive ka sa bad words or kung down ka right now, huwag mo munang subukan ito.</p>
-    <div class="consent-check">
-      <label>
-        <input type="checkbox" id="consent-box" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trastok Bot</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-black text-white h-screen m-0 font-sans overflow-hidden">
+
+  <!-- blurred background layer -->
+  <div class="fixed inset-0 bg-gradient-to-br from-zinc-800 via-black to-zinc-900 blur-3xl opacity-50 scale-110"></div>
+
+  <div id="consent-screen" class="relative h-screen flex items-center justify-center px-4">
+    <div class="bg-zinc-900 p-8 rounded-2xl max-w-md w-full text-center shadow-xl border border-zinc-800">
+      <h1 class="text-3xl font-bold mb-3">Trastok Bot</h1>
+      <p class="text-zinc-300 mb-2">Chatbot na magmumura at mangloloko sayo. Tagalog curse words, roasts, kalokohan.</p>
+      <p class="text-red-500 text-sm mb-4">Hindi ito para sa lahat. Kung sensitive ka sa bad words or kung down ka
+        right now, huwag mo munang subukan ito.</p>
+      <label class="flex items-start gap-2 text-left text-sm mb-6">
+        <input type="checkbox" id="consent-box" class="mt-1 accent-white" />
         Alam ko na magmumura ang bot na ito at ok lang sa akin iyon.
       </label>
+      <button id="enter-btn" disabled
+        class="w-full bg-white hover:bg-zinc-200 disabled:bg-zinc-700 disabled:text-zinc-500 disabled:cursor-not-allowed text-black font-semibold py-3 rounded-lg transition-colors">
+        Oke sige
+      </button>
     </div>
-    <button id="enter-btn" disabled>Sige, tara</button>
   </div>
-</div>
 
-<div id="chat-screen" class="screen hidden">
-  <header>
-    <h1>🔥 Bwisit Bot</h1>
-    <button id="exit-btn" title="Umalis">Alis</button>
-  </header>
-  <div id="messages"></div>
-  <form id="chat-form">
-    <input id="chat-input" type="text" placeholder="Type mo dito..." autocomplete="off" />
-    <button type="submit">Send</button>
-  </form>
-</div>
+  <div id="chat-screen" class="hidden relative h-screen flex items-center justify-center py-6">
+    <div
+      class="w-full max-w-sm h-full max-h-[800px] bg-zinc-900 rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-zinc-800">
 
-<script src="app.js"></script>
+      <header class="flex justify-between items-center px-5 py-4 bg-black border-b border-zinc-800">
+        <h1 class="text-lg font-bold">Trastok Bot</h1>
+        <button id="exit-btn"
+          class="bg-white hover:bg-zinc-200 text-black text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
+          Exit
+        </button>
+      </header>
+
+      <div id="messages" class="flex-1 overflow-y-auto p-5 flex flex-col gap-3"></div>
+
+      <form id="chat-form" class="flex gap-2 p-4 bg-black border-t border-zinc-800 items-end">
+        <textarea id="chat-input" rows="1" placeholder="Type mo dito..." autocomplete="off"
+          class="flex-1 bg-zinc-900 text-white rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-white resize-none max-h-32 overflow-y-auto"></textarea>
+        <button type="button" id="clear-btn"
+          class="bg-zinc-800 hover:bg-zinc-700 text-white font-semibold px-5 py-3 rounded-lg transition-colors">
+          Clear
+        </button>
+        <button type="submit"
+          class="bg-white hover:bg-zinc-200 text-black font-semibold px-5 py-3 rounded-lg transition-colors">
+          Send
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
 </body>
+
 </html>

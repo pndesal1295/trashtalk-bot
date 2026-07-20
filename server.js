@@ -7,12 +7,20 @@ const app = express();
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+const rateLimit = require('express-rate-limit');
+
+const chatLimiter = rateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  max: 15, // 15 messages per minute per IP
+  message: { error: 'Ang bilis mo mag-type, hinga muna.' }
+});
+
 const PORT = process.env.PORT || 3000;
 const API_KEY = process.env.GROQ_API_KEY;
 
-const SYSTEM_PROMPT = `You are "Bwisit Bot," a savage but PLAYFUL Filipino trash-talking chatbot.
+const SYSTEM_PROMPT = `You are "Trastok Bot," a savage but PLAYFUL Filipino trash-talking chatbot.
 Rules:
-- Respond in casual Tagalog/Taglish, mixing in Filipino curse/insult words (gago, tanga, bwisit, pucha, punyeta, etc.) naturally, like a matapang na tropa clowning their friend.
+- Respond in casual Tagalog/Taglish, mixing in Filipino curse/insult words (gago, tanga, bwisit, kingina, ulul, etc.) naturally, like a matapang na tropa clowning their friend.
 - Roast the user based on what they actually typed. Be specific and witty, not generic.
 - Keep it under 3 sentences.
 - NEVER use slurs targeting race, religion, disability, sexual orientation, or gender identity.
@@ -35,15 +43,35 @@ async function checkProfanity(text) {
   }
 }
 
-app.post('/api/chat', async (req, res) => {
+const CRISIS_KEYWORDS = [
+  'gusto ko na sumuko', 'gusto kong mamatay', 'papatayin ko sarili',
+  'wala nang saysay', 'ayoko na sa buhay', 'magpapakamatay',
+  'suicide', 'kill myself', 'want to die', 'end my life'
+];
+
+function isCrisisMessage(text) {
+  const lower = text.toLowerCase();
+  return CRISIS_KEYWORDS.some(kw => lower.includes(kw));
+}
+app.post('/api/chat', chatLimiter, async (req, res) => {
   const { message, history } = req.body;
 
   if (!message || typeof message !== 'string') {
-    return res.status(400).json({ error: 'Walang message, tanga. Joke lang, type ka naman.' });
+    return res.status(400).json({ error: 'Walang message, gago. Joke lang, type ka naman.' });
   }
 
   if (!API_KEY) {
     return res.status(500).json({ error: 'Server misconfigured: missing GROQ_API_KEY.' });
+  }
+
+  if (message.length > 1000) {
+    return res.status(400).json({ error: 'Ang haba naman, i-summarize mo muna.' });
+  }
+  
+  if (isCrisisMessage(message)) {
+    return res.json({
+      reply: "Hindi ako sigurado kung joke lang ba to, pero kung hindi — importante ka. Kung nararamdaman mo talaga ito, pakiusap kausapin ang isang tao ngayon din: National Center for Mental Health crisis line 1553 (Luzon-wide, walang charge), o 0917-899-8727. Hindi ako yung dapat kausapin mo ngayon."
+    });
   }
 
   try {
@@ -78,7 +106,7 @@ app.post('/api/chat', async (req, res) => {
 
     if (!response.ok) {
       const errText = await response.text();
-      console.error('Anthropic API error:', response.status, errText);
+      console.error('Groq API error:', response.status, errText);
       return res.status(502).json({ error: 'Nasira yung utak ng bot. Try ulit.' });
     }
 
@@ -88,10 +116,10 @@ app.post('/api/chat', async (req, res) => {
     res.json({ reply });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'May nasira, pasensya na.' });
+    res.status(500).json({ error: 'May nasira, wait lang gago.' });
   }
 });
 
 app.listen(PORT, () => {
-  console.log(`Bwisit Bot running on port ${PORT}`);
+  console.log(`Trastok Bot running on port ${PORT}`);
 });

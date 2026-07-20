@@ -6,6 +6,28 @@ const exitBtn = document.getElementById('exit-btn');
 const messagesEl = document.getElementById('messages');
 const form = document.getElementById('chat-form');
 const input = document.getElementById('chat-input');
+const clearBtn = document.getElementById('clear-btn');
+
+// auto-grow textarea as user types
+input.addEventListener('input', () => {
+  input.style.height = 'auto';
+  input.style.height = input.scrollHeight + 'px';
+});
+
+// clear button just wipes current input text
+clearBtn.addEventListener('click', () => {
+  input.value = '';
+  input.style.height = 'auto';
+  input.focus();
+});
+
+// enter sends, shift+enter makes a new line
+input.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    form.requestSubmit();
+  }
+});
 
 let history = [];
 
@@ -26,11 +48,16 @@ exitBtn.addEventListener('click', () => {
   enterBtn.disabled = true;
   messagesEl.innerHTML = '';
   history = [];
+  input.value = '';
+  input.style.height = 'auto';
 });
 
 function addMessage(role, text) {
   const div = document.createElement('div');
-  div.className = `msg ${role}`;
+  const isUser = role === 'user';
+  div.className = `max-w-[75%] px-4 py-2 rounded-xl leading-relaxed ${
+    isUser ? 'self-end bg-white text-black' : 'self-start bg-zinc-800 text-white'
+  }`;
   div.textContent = text;
   messagesEl.appendChild(div);
   messagesEl.scrollTop = messagesEl.scrollHeight;
