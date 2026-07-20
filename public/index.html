@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bwisit Bot</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div id="consent-screen" class="screen">
+  <div class="card">
+    <h1>🔥 Bwisit Bot</h1>
+    <p>Chatbot na magmumura at mangloloko sayo. Tagalog curse words, roasts, kalokohan.</p>
+    <p class="warn">Hindi ito para sa lahat. Kung sensitive ka sa bad words or kung down ka right now, huwag mo munang subukan ito.</p>
+    <div class="consent-check">
+      <label>
+        <input type="checkbox" id="consent-box" />
+        Alam ko na magmumura ang bot na ito at ok lang sa akin iyon.
+      </label>
+    </div>
+    <button id="enter-btn" disabled>Sige, tara</button>
+  </div>
+</div>
+
+<div id="chat-screen" class="screen hidden">
+  <header>
+    <h1>🔥 Bwisit Bot</h1>
+    <button id="exit-btn" title="Umalis">Alis</button>
+  </header>
+  <div id="messages"></div>
+  <form id="chat-form">
+    <input id="chat-input" type="text" placeholder="Type mo dito..." autocomplete="off" />
+    <button type="submit">Send</button>
+  </form>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
