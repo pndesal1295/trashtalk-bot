@@ -13,7 +13,7 @@ Note: free tier sleeps after inactivity, first request after a quiet period can 
 ```
    cp .env.example .env
 ```
-3. `npm start`
+3. `npm start` 
 4. Open `http://localhost:3000`
 
 Get a free API key from https://console.groq.com/ (API Keys). No credit card required for the free tier.
@@ -27,9 +27,10 @@ Get a free API key from https://console.groq.com/ (API Keys). No credit card req
 5. Add environment variable: `GROQ_API_KEY` = your key
 6. Deploy. Render gives you a live `.onrender.com` URL
 
-## Safety features
+## Features and Safety
 
 - **Consent gate**: chat is locked behind an explicit checkbox before it unlocks
+- **Mobile-Responsive UI**: Uses Dynamic Viewport Height (100dvh) to prevent mobile keyboards from hiding the text input, with edge-to-edge layout adjustments for smaller screens.
 - **Crisis keyword filter**: messages matching common distress/suicidal phrasing (Tagalog and English) skip the LLM entirely and return a mental health hotline message instead — no roleplay, no roast, guaranteed
 - **Profanity severity check**: uses a free public Filipino profanity API to detect if the user is already cursing, and adjusts the bot's energy accordingly
 - **Rate limiting**: 15 messages per minute per IP
@@ -43,9 +44,9 @@ Get a free API key from https://console.groq.com/ (API Keys). No credit card req
 ## Tech stack
 
 - Node.js / Express backend
-- Groq API (Llama 3.3 70B) for chat responses
+- Groq API (openai/gpt-oss-120b) for chat responses
 - [Filipino Profanity API](https://github.com/jobelGolde12/filipino_profanity_api_latest) for severity detection
-- Vanilla JS + Tailwind CDN frontend
+- Vanilla JS + Tailwind CDN frontend (Brutalist styling)
 - Deployed on Render
 
 ## Author
