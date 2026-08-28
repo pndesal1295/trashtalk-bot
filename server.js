@@ -67,7 +67,7 @@ app.post('/api/chat', chatLimiter, async (req, res) => {
   if (message.length > 1000) {
     return res.status(400).json({ error: 'Ang haba naman, i-summarize mo muna.' });
   }
-  
+
   if (isCrisisMessage(message)) {
     return res.json({
       reply: "Hindi ako sigurado kung joke lang ba to, pero kung hindi — importante ka. Kung nararamdaman mo talaga ito, pakiusap kausapin ang isang tao ngayon din: National Center for Mental Health crisis line 1553 (Luzon-wide, walang charge), o 0917-899-8727. Hindi ako yung dapat kausapin mo ngayon."
@@ -95,7 +95,7 @@ app.post('/api/chat', chatLimiter, async (req, res) => {
         'Authorization': `Bearer ${API_KEY}`
       },
       body: JSON.stringify({
-        model: 'llama-3.3-70b-versatile',
+        model: 'openai/gpt-oss-120b',
         max_tokens: 200,
         messages: [
           { role: 'system', content: SYSTEM_PROMPT },

@@ -8,20 +8,17 @@ const form = document.getElementById('chat-form');
 const input = document.getElementById('chat-input');
 const clearBtn = document.getElementById('clear-btn');
 
-// auto-grow textarea as user types
 input.addEventListener('input', () => {
   input.style.height = 'auto';
   input.style.height = input.scrollHeight + 'px';
 });
 
-// clear button just wipes current input text
 clearBtn.addEventListener('click', () => {
   input.value = '';
   input.style.height = 'auto';
   input.focus();
 });
 
-// enter sends, shift+enter makes a new line
 input.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' && !e.shiftKey) {
     e.preventDefault();
@@ -38,7 +35,7 @@ consentBox.addEventListener('change', () => {
 enterBtn.addEventListener('click', () => {
   consentScreen.classList.add('hidden');
   chatScreen.classList.remove('hidden');
-  addMessage('bot', 'Ano meron sayo? Sabihin mo, wag kang sungit-sungit diyan.');
+  addMessage('bot', 'Aba, pumasok pa ang bobo. Anong kailangan mo? Bilis.');
 });
 
 exitBtn.addEventListener('click', () => {
@@ -55,9 +52,14 @@ exitBtn.addEventListener('click', () => {
 function addMessage(role, text) {
   const div = document.createElement('div');
   const isUser = role === 'user';
-  div.className = `max-w-[75%] px-4 py-2 rounded-xl leading-relaxed ${
-    isUser ? 'self-end bg-white text-black' : 'self-start bg-zinc-800 text-white'
+  
+  // Brutalist Chat Bubble Styling
+  div.className = `max-w-[85%] px-5 py-4 border-4 border-black font-bold text-base leading-relaxed uppercase ${
+    isUser 
+      ? 'self-end bg-black text-white shadow-[6px_6px_0_0_rgba(200,200,200,1)]' 
+      : 'self-start bg-white text-black shadow-[6px_6px_0_0_rgba(0,0,0,1)]'
   }`;
+  
   div.textContent = text;
   messagesEl.appendChild(div);
   messagesEl.scrollTop = messagesEl.scrollHeight;
@@ -72,8 +74,9 @@ form.addEventListener('submit', async (e) => {
   input.value = '';
 
   const typingEl = document.createElement('div');
-  typingEl.className = 'msg bot';
-  typingEl.textContent = '...';
+  // Brutalist typing indicator
+  typingEl.className = 'max-w-[85%] px-5 py-4 border-4 border-black font-bold bg-white text-black self-start shadow-[6px_6px_0_0_rgba(0,0,0,1)] uppercase';
+  typingEl.textContent = 'NAG-IISIP NG MURA...';
   messagesEl.appendChild(typingEl);
   messagesEl.scrollTop = messagesEl.scrollHeight;
 
@@ -96,10 +99,9 @@ form.addEventListener('submit', async (e) => {
     history.push({ role: 'user', content: text });
     history.push({ role: 'assistant', content: data.reply });
 
-    // keep history from growing forever
     if (history.length > 20) history = history.slice(-20);
   } catch (err) {
     typingEl.remove();
-    addMessage('bot', 'Nawala connection, tangina naman.');
+    addMessage('bot', 'Putsa, nawala internet. Ayusin mo connection mo.');
   }
 });
