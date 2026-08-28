@@ -47,3 +47,9 @@ Get a free API key from https://console.groq.com/ (API Keys). No credit card req
 - [Filipino Profanity API](https://github.com/jobelGolde12/filipino_profanity_api_latest) for severity detection
 - Vanilla JS + Tailwind CDN frontend
 - Deployed on Render
+
+## Author
+**Kline Olasiman**
+ 
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/pndesal1295)
+[![Instagram](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/1295koo)
